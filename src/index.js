@@ -1,30 +1,23 @@
+import axios from "axios";
 import { load } from "cheerio";
-import express from "express";
-import setPayload from "./utils/setPayload.js";
-import getHtml from "./utils/getHtml.js";
+import express, { json } from "express";
 import PORT from "./utils/PORT.js";
 
 const app = express();
 
 app.get("/", async (req, res) => {
   try {
-    const html = await getHtml("https://otakudesu.co.id");
-    const $ = load(html);
+    const response = await axios.get("https://zoronime.com", {
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+      },
+    });
 
-    const title = $("title").text();
+    const $ = load(response.data);
 
-    res.status(200).json(
-      setPayload(res, {
-        message: "OK",
-        data: title,
-      })
-    );
+    res.send($("title").text());
   } catch (error) {
-    res.status(500).json(
-      setPayload(res, {
-        message: "INTERNAL SERVER ERROR",
-      })
-    );
+    res.status(500).json({ error: error.message });
   }
 });
 
