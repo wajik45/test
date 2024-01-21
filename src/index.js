@@ -9,8 +9,10 @@ app.get("/", async (req, res) => {
   try {
     const response = await axios.get("https://zoronime.com", {
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36 Edg/120.0.0.0",
+        Accept:
+          "text/html, application/xhtml+xml, application/xml;q=0.9, image/webp, */*;q=0.8",
+        "Accept-Language": "en",
+        "User-Agent": "got-scraping/1.3.9",
       },
     });
 
