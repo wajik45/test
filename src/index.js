@@ -7,17 +7,25 @@ import PORT from "./utils/PORT.js";
 const app = express();
 
 app.get("/", async (req, res) => {
-  const html = await getHtml("https://zoronime.com");
-  const $ = load(html);
+  try {
+    const html = await getHtml("https://otakudesu.co.id");
+    const $ = load(html);
 
-  const title = $("title").text();
+    const title = $("title").text();
 
-  res.status(200).json(
-    setPayload(res, {
-      message: "OK",
-      data: title,
-    })
-  );
+    res.status(200).json(
+      setPayload(res, {
+        message: "OK",
+        data: title,
+      })
+    );
+  } catch (error) {
+    res.status(500).json(
+      setPayload(res, {
+        message: "INTERNAL SERVER ERROR",
+      })
+    );
+  }
 });
 
 app.listen(PORT, () => {
