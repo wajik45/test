@@ -10,10 +10,12 @@ app.get("/", async (req, res) => {
   const html = await getHtml("https://zoronime.com");
   const $ = load(html);
 
+  const title = $("title").text();
+
   res.status(200).json(
     setPayload(res, {
       message: "OK",
-      data: $("title").text(),
+      data: title,
     })
   );
 });
